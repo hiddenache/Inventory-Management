@@ -1,6 +1,6 @@
 # APLICAȚIE WEB – MANAGEMENTUL INVENTARULUI UNEI COMPANII FOLOSIND ALGORITMI DE INTELIGENȚĂ ARTIFICIALĂ
 
-# DUPA CLONAREA REPOSITORY-ULUI
+# STEPS TO RUN
 
 - trebuie ca Python să fie prezent pe sistem, pentru aceasta mergeți aici: https://www.python.org/downloads/ și downloadați ultima versiune
 - după ce Python s-a instalat cu succes pe sistem, putem verifica acest lucru prin scrierea în CMD comenzii: 'python'
