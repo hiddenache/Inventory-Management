@@ -1,0 +1,141 @@
+.sidebar-text,
+.sidebar-text:hover,
+.sidebar-text:focus {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+#wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+#sidebar {
+  width: 100%;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background: #04685e;
+  color: #fff;
+  transition: all 0.3s;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 60px;
+  padding: 20px;
+  background: #04685e;
+}
+
+.sidebar-components {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.sidebar-paragraph {
+  color: #fff;
+  padding: 10px;
+}
+
+.dropdown-toggle::after {
+  
+}
+
+a.right-arrow[data-toggle="collapse"] {
+  position: relative;
+}
+
+.sidebar-button {
+  padding: 30px;
+  font-size: 1.1em;
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
+  align-items: center;
+}
+
+.sidebar-button:hover {
+  color: #04685e;
+  background: #fff;
+}
+
+.sidebar-subitem {
+  font-size: 0.9em !important;
+  padding-left: 30px !important;
+  background: #04685e;
+}
+
+ul.CTAs {
+  padding: 20px;
+}
+
+ul.CTAs a {
+  text-align: center;
+  font-size: 0.9em !important;
+  display: block;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+a.nav-button {
+  background: #fff;
+  color: #607d8b;
+}
+
+.bottomleft {
+  bottom: 0;
+  min-width: 250px;
+  max-width: 250px;
+  list-style: none;
+}
+
+.user-login{
+  display: flex;
+  margin-top: 100px;
+}
+
+h3{
+  margin-bottom: 0 !important;
+}
+
+.navbar-brand{
+  margin-right: 0 !important;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+  width: 100%;
+  padding: 20px;
+  margin-top: 70px;
+  min-height: 100vh;
+  transition: all 0.3s;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+  #sidebar {
+    margin-left: -250px;
+  }
+  #sidebar.active {
+    margin-left: 0;
+  }
+  #sidebarCollapse span {
+    display: none;
+  }
+}

@@ -1,0 +1,152 @@
+{% extends bill_base %}
+{% load static %}
+
+
+{% block title %} Factura nr. {{ bill.billno }}{% endblock title %}
+
+
+{% block content %}
+    
+    <div style="color:#575757; font-style: bold; font-size: 3rem;  border-bottom: 1px solid white;">Factura Nr. : {{ bill.billno }}</div>
+
+    <!-- <br><br> -->
+
+    <form method="post">
+    {% csrf_token %}
+
+        <div class="bg">
+
+            <br>
+
+            <div id="printArea" class="bg">
+
+                <table class="outer-box inner-box" style="width: 840px; margin-left: auto; margin-right: auto;">
+                    <tbody>
+                    
+                        <tr style="height: 1px;">
+                            <td> <p style="text-align: center;">FACTURA - VANZARE</p> </td>
+                        </tr>
+                    
+                        <tr style="text-align: center;">
+                            <td >
+                                <span style="font-size: 350%;">Stockify</span> <br>
+                                <span style="font-weight: bold;">ADRESA :</span> Timis, Timisoara<br>
+                                <span style="font-weight: bold;">EMAIL : contact@stockify.com</span> <br><br>
+                            </td>
+                        </tr>
+                    
+                        <tr>
+                            <td>
+                            <table class="outer-box" style="width: 800px; margin-left: auto; margin-right: auto;">
+                                <tbody>                                   
+                                    <tr>
+                                        <td class="inner-box" style="width: 50%; font-weight: bold;">&nbsp;NUME CUMPARATOR</td>
+                                        <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;FACTURA NR. </td>
+                                        <td class="inner-box" style="width: 25%;">&nbsp;{{ bill.billno }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="width: 50%;">&nbsp;{{ bill.name }}</td>
+                                        <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;DATA</td>
+                                        <td class="inner-box" style="width: 25%;">&nbsp;{{ bill.time.date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="width: 50%;" rowspan="3">{{ bill.address|linebreaks }}</td>
+                                    </tr>
+                                    <tr>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box align-middle" style="width: 25%;"> <input type="text" name="destination" class="align-middle" style="border: 0; overflow: hidden;" value="{% if billdetails.destination %}{{ billdetails.destination }}{% endif %}"> </td>
+                                    </tr>
+                                
+                                </tbody>
+                            </table>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                            <table class="outer-box" style="width: 800px; margin-left: auto; margin-right: auto;">
+                                <tbody>
+                                    <tr>
+                                        <td class="inner-box" style="width: 5%; font-weight: bold; text-align: center;">&nbsp;ID</td>
+                                        <td class="inner-box" style="width: 30%; font-weight: bold; text-align: center;">PRODUSE</td>
+                                        <td class="inner-box" style="width: 12%; font-weight: bold; text-align: center;">CANT.</td>
+                                        <td class="inner-box" style="width: 12%; font-weight: bold; text-align: center;">SUMA $</td>
+                                        <td class="inner-box" style="width: 12%; font-weight: bold; text-align: center;">TOTAL $</td>
+
+                                    </tr>
+                                    {% for item in items %}
+                                        <tr style="height: auto;">
+                                            <td class="inner-box" style="width: 5%; text-align: center;">&nbsp; {{ forloop.counter }}</td>
+                                            <td class="inner-box" style="width: 30%; text-align: center;">&nbsp; {{ item.stock.name }}</td>
+                                            <td class="inner-box" style="width: 12%; text-align: center;">&nbsp; {{ item.quantity }}</td>
+                                            <td class="inner-box" style="width: 12%; text-align: center;">&nbsp; {{ item.perprice }}</td>
+                                            <td class="inner-box" style="width: 12%; text-align: center;">&nbsp;{{ item.totalprice }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                            <table class="outer-box inner-box" style="width: 800px; margin-left: auto; margin-right: auto;">
+                                <tbody>
+                                    <tr>                                   
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="font-weight: bold;">&nbsp;TAXA @ 10% </td>
+                                    </tr>                                   
+                                    <tr>
+                                        {% for item in items %}
+                                        <td class="inner-box" style="font-weight: bold;">&nbsp;TOTAL</td>
+                                        <td class="inner-box align-middle">&nbsp;
+                                            {{item.totalprice}}$</td>
+                                            {% endfor %}
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: right;">
+                                <span style="font-weight: bold;"><br><br><br><br> Semnatura</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- <br><br> -->
+
+        </div>
+
+        <br><br>
+
+        <div class="wrapper">
+            <button class="center btn btn-primary" onclick="printpage('printArea')">Printeaza</button>
+            <a href="{% url 'sales-list' %}" class="btn center btn-secondary">Go Back</a>
+        </div>
+    
+    </form>
+    
+    <script>
+        function printpage(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }       
+        </script>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block title %} Sterge produs {% endblock title %}
+
+
+{% block content %}
+                
+    <form method="post">
+        
+        {% csrf_token %}
+        
+        <fieldset class="form-group">
+            <div style="color:#575757; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">Sterge produs</div> <br>
+            <h2 style="color:#575757;">Esti sigur ca vrei sa stergi "{{ object.name }}"?</h2>
+        </fieldset>
+
+        <div class="form-group">  
+            <button type="submit" class="btn btn-danger">Sterge</button>
+            <a href="{% url 'inventory' %}" class="btn btn-secondary">Anuleaza</a>
+        </div>
+        
+    </form>
+
+{% endblock content %}

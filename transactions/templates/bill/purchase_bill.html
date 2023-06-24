@@ -1,0 +1,89 @@
+{% extends bill_base %}
+{% load static %}
+
+{% block content %}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<div class="invoice-container">
+    <div class="invoice-number">
+        <p>ID: {{ bill.billno }}</p>
+    </div>
+    <h1>Factura nr. {{ bill.billno }}</h1>
+    <div class="invoice-header">       
+        <div class="invoice-from">
+            <p>De la: Stockify S.R.L</p>
+        </div>
+        <div class="invoice-to">
+            <p>Pentru: {{ bill.supplier }}</p>
+        </div>
+    </div>
+
+    <div class="invoice-info">
+        <div class="info-block">
+            <span>Adresa:</span>
+            {{ bill.supplier.address | linebreaks }}
+        </div>
+        <div class="info-block">
+            <span>Data eliberare:</span>
+            {{ bill.time.date }}
+        </div>
+    </div>
+
+    <table class="invoice-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Descriere</th>
+                <th>Qty</th>
+                <th>Pret/buc</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ item.stock.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.perprice }}$</td>
+                <td>{{ item.totalprice }}$</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="invoice-total">
+        <div class="total-label">Total Plata:</div>
+        <div class="total-amount">
+            {% for item in items %}
+            <span>{{ item.totalprice }}$</span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="barcode">
+    </div>
+
+    <!-- Existing code -->
+
+    <div class="signature-labels">
+        <div class="signature-label">
+            Semnatura client:
+            <hr>
+        </div>
+        <div class="signature-label">
+            Stockify Director:
+            <hr>
+        </div>
+    </div>
+
+    <hr class="no-print"> 
+
+    <div class="text-center my-4 no-print">
+        <button class="btn btn-primary" onclick="window.print()">
+            Print
+        </button>
+    </div>
+</div>
+
+{% endblock content %}

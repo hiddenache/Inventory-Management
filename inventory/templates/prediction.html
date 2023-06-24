@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+    <div style="height: 100%;">
+        <canvas id="salesChart" width="1000px" height="600px"></canvas>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="mt-4">
+         {% csrf_token %}
+        <div class="form-group">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="file-upload-input" name="file">
+                <label class="custom-file-label" for="file-upload-input">Choose file</label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-dark">Submit</button>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Retrieve prediction data from JSON
+        var predictionData = {{ prediction_data_json|safe }};
+
+        // Extract labels and sales data
+        var labels = predictionData.labels;
+        var actualSales = predictionData.actualSales;
+        var predictedSales = predictionData.predictedSales;
+
+        // Create chart context
+        var ctx = document.getElementById('salesChart').getContext('2d');
+
+        // Create sales chart
+        var salesChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Vanzari actuale',
+                    data: actualSales,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    fill: false
+                }, {
+                    label: 'Vanzari anticipate',
+                    data: predictedSales,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Luna'
+                        },
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Vanzari'
+                        },
+                    }
+            }   }
+        });
+    </script>
+{% endblock content %}
